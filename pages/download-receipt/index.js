@@ -6,7 +6,7 @@ const index = () => {
   const samplePdf = "/sample-pdf-file.pdf";
   return (
     <main
-      className={`border border-red-300 rounded-lg flex min-h-screen flex-col items-center justify-between p-10`}
+      className={`  rounded-lg flex min-h-screen flex-col items-center justify-between p-10 pt-24`}
     >
       <div className="space-y-4 w-[350px] border border-slate-300 rounded-lg p-4">
         <h1>You can now download your receipt</h1>

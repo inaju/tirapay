@@ -8,7 +8,7 @@ const MakePayment = ({ email, amount, metadata, buttonText, receiptNo }) => {
 
   const componentProps = {
     email: email,
-    amount: amount,
+    amount: amount*100,
     metadata: {
       ...metadata,
     },

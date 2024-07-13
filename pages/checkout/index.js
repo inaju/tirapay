@@ -13,6 +13,8 @@ const CheckoutPage = () => {
   const query = useSearchParams();
   const receiptNoFromParams = query.get("receiptNo");
   const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getCurrentReceiptData();
   }, []);
@@ -20,15 +22,17 @@ const CheckoutPage = () => {
   const getCurrentReceiptData = async () => {
     const data = await getDuewithReceiptNo({ receiptNo: receiptNoFromParams });
     setData(data);
+    setIsLoading(false);
   };
 
-  const showPaymentDetails = data?.length && data[0]?.status != "success";
+  const showPaymentDetails =
+    !isLoading && data?.length && data[0]?.status != "success";
   return (
     <main
-      className={`border border-red-300 rounded-lg flex min-h-screen flex-col items-center justify-between p-10`}
+      className={`  rounded-lg flex min-h-screen flex-col items-center justify-between p-10 pt-24`}
     >
       <div className="space-y-4 w-[350px] border border-slate-300 rounded-lg p-4">
-        {!data?.length && <Spinner />}
+        {isLoading && <Spinner />}
         {showPaymentDetails ? (
           <div className="flex flex-col space-y-2">
             <h1>Please confirm your details</h1>
@@ -37,7 +41,7 @@ const CheckoutPage = () => {
               <TextItem item={data[0]?.email} />
             </div>
             <div className="flex gap-2 items-end">
-              <TextLabel item={"Email: "} />
+              <TextLabel item={"Receipt No: "} />
               <TextItem item={data[0]?.receiptNo} />
             </div>
             <div className="flex gap-2 items-end">

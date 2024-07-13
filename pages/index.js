@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main
-      className={`border border-red-300 rounded-lg flex min-h-screen flex-col items-center justify-between p-10`}
+      className={`  rounded-lg flex min-h-screen flex-col items-center justify-between p-10 pt-24`}
     >
       <div>
         <DueForm />
