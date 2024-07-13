@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
+import { Document, Page } from "react-pdf";
 
 const index = () => {
   const samplePdf = "/sample-pdf-file.pdf";
@@ -9,6 +10,13 @@ const index = () => {
     >
       <div className="space-y-4 w-[350px] border border-slate-300 rounded-lg p-4">
         <h1>You can now download your receipt</h1>
+        <iframe
+          src={
+            "https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-file.pdf"
+          }
+          height="300px"
+          width="300px"
+        />
         <Button onClick={() => downloadPdf(samplePdf, `Receipt Download`)}>
           Download Pdf
         </Button>
