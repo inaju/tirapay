@@ -55,8 +55,8 @@ export function DueForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const priceObj = [
-    { name: "shirt", amount: 400, label: "Shirt N400" },
-    { name: "dues", amount: 600, label: "Dues N600" },
+    { name: "shirt", amount: 4000, label: "Shirt N4,000" },
+    { name: "dues", amount: 6000, label: "Dues N6,000" },
   ];
 
   const mutation = useMutation({
@@ -188,7 +188,7 @@ export function DueForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Final Year Dues" />
+                    <SelectValue placeholder="" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

@@ -3,28 +3,30 @@
 import MakePayment from "@/components/make-payment";
 import Spinner from "@/components/spinner";
 import { Button } from "@/components/ui/button";
-import { getDue, getDuewithReceiptNo } from "@/services/due.service";
-import { useQuery } from "@tanstack/react-query";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { getDuewithReceiptNo } from "@/services/due.service";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const CheckoutPage = () => {
   const router = useRouter();
-  const query = useSearchParams();
-  const receiptNoFromParams = query.get("receiptNo");
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
+  const [receiptNo, setReceiptNo] = useState();
   useEffect(() => {
     getCurrentReceiptData();
   }, []);
 
   const getCurrentReceiptData = async () => {
-    const data = await getDuewithReceiptNo({ receiptNo: receiptNoFromParams });
-    setData(data);
-    setIsLoading(false);
+    if (typeof window != undefined) {
+      var urlParams = new URLSearchParams(window.location.search);
+      var receiptNo = urlParams.get("receiptNo");
+      setReceiptNo(receiptNo);
+      const data = await getDuewithReceiptNo({ receiptNo: receiptNo });
+      setData(data);
+      setIsLoading(false);
+    }
   };
-
+  console.log(receiptNo, "receiptNoreceiptNo");
   const showPaymentDetails =
     !isLoading && data?.length && data[0]?.status != "success";
   return (
@@ -33,7 +35,7 @@ const CheckoutPage = () => {
     >
       <div className="space-y-4 w-[350px] border border-slate-300 rounded-lg p-4">
         {isLoading && <Spinner />}
-        {showPaymentDetails ? (
+        {!isLoading && showPaymentDetails ? (
           <div className="flex flex-col space-y-2">
             <h1>Please confirm your details</h1>
             <div className="flex gap-2 items-end">
@@ -64,6 +66,7 @@ const CheckoutPage = () => {
             <MakePayment
               buttonText={`Pay N${data[0]?.amount} Now`}
               email={data[0]?.email}
+              fullname={data[0]?.fullname}
               amount={data[0]?.amount}
               metadata={data[0]}
               receiptNo={data[0]?.receiptNo}
